@@ -1,0 +1,77 @@
+{
+  "name": "hanmatek-hm310p",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Electron based application for the Hanmatek HM310P DC Power Supply, offers Charts and CSV Export.",
+  "keywords": [
+    "hanmatek",
+    "hm310p",
+    "charts",
+    "csv",
+    "dc",
+    "power supply"
+  ],
+  "main": "index.js",
+  "scripts": {
+    "start": "electron .",
+    "test": "xo",
+    "lintfix": "xo --fix",
+    "dist": "electron-builder build",
+    "postinstall": "electron-builder install-app-deps"
+  },
+  "author": {
+    "name": "Sebastian Raff",
+    "email": "hobbyquaker@gmail.com",
+    "url": "https://github.com/hobbyquaker"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "electron-is-dev": "^1.2.0",
+    "electron-json-storage": "^4.2.0",
+    "electron-window-state": "^5.0.3",
+    "@fortawesome/fontawesome-free": "^5.14.0",
+    "bootstrap": "^4.5.0",
+    "dseg": "^0.46.0",
+    "highcharts": "^8.1.2",
+    "jquery": "^3.5.1",
+    "modbus-serial": "^8.0.0",
+    "popper.js": "^1.16.1"
+  },
+  "devDependencies": {
+    "electron": "^9.1.0",
+    "electron-builder": "^22.7.0",
+    "xo": "^0.32.1"
+  },
+  "xo": {
+    "space": 4,
+    "rules": {
+      "capitalized-comments": 0,
+      "spaced-comment": 0,
+      "unicorn/prevent-abbreviations": 0,
+      "import/no-unassigned-import": 0
+    },
+    "global": [
+      "document"
+    ]
+  },
+  "build": {
+    "productName": "HM310P",
+    "mac": {
+      "target": [
+        "dmg"
+      ]
+    },
+    "linux": {
+      "target": [
+        "deb",
+        "tar.gz"
+      ]
+    },
+    "win": {
+      "target": [
+        "nsis",
+        "portable"
+      ]
+    }
+  }
+}

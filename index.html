@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+
+<title>HM310P</title>
+
+<link rel="stylesheet" type="text/css" href="node_modules/dseg/css/dseg.css">
+<link rel="stylesheet" type="text/css" href="node_modules/@fortawesome/fontawesome-free/css/all.min.css">
+<link rel="stylesheet" href="darkly/bootstrap.min.css">
+
+<style>
+    .segment {
+        color: red;
+        font-family: DSEG7-Classic-MINI;
+        font-size: 72px;
+        text-shadow: 0px 0px 12px red;
+    }
+
+    .input-group-prepend .input-group-text {
+        width: 56px;
+        color: #fff;
+    }
+    .memory {
+        width: 100%;
+    }
+
+    #alert {
+        position: fixed;
+        right: 0;
+        left: 0;
+        z-index: 10;
+        margin: 6px;
+    }
+</style>
+
+<body>
+<div class="container" style="display: none;">
+    <div class="row" style="font-size: 32px">
+        <div class="col-sm text-center">
+            Voltage
+        </div>
+        <div class="col-sm text-center">
+            Current
+        </div>
+        <div class="col-sm text-center">
+            Power
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm">
+            <div id="voltageGauge"></div>
+        </div>
+        <div class="col-sm">
+            <div id="currentGauge"></div>
+        </div>
+        <div class="col-sm">
+            <div id="powerGauge"></div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm text-center">
+            <span id="dVoltage" class="segment">0.00</span>V</span>
+        </div>
+        <div class="col-sm text-center">
+            <span id="dCurrent" class="segment">0.000</span><span>A</span>
+        </div>
+        <div class="col-sm text-center">
+            <span id="dPower" class="segment">0.000</span><span>W</span>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-sm text-center">
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span id="cv" class="input-group-text">CV</span>
+                </div>
+                <input class="form-control write" type="number" id="setVoltage" min="0" max="32">
+                <div class="input-group-append">
+                    <span class="input-group-text">V</span>
+                </div>
+            </div>
+
+        </div>
+        <div class="col-sm text-center">
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span id="cc" class="input-group-text">CC</span>
+                </div>
+                <input class="form-control write" type="number" id="setCurrent" min="0" max="10">
+                <div class="input-group-append">
+                    <span class="input-group-text">A</span>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm text-center">
+            <button id="powerSwitch" class="btn btn-secondary pl-5 pr-5"><i class="fa fa-power-off"></i></button>
+        </div>
+    </div>
+    <!--
+    <div class="row">
+        <div class="col-sm text-center">
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span id="ovp" class="input-group-text">OVP</span>
+                </div>
+                <input class="form-control write write" type="number" id="protectVoltage" min="0" max="32">
+                <div class="input-group-append">
+                    <span class="input-group-text">V</span>
+                </div>
+            </div>
+
+        </div>
+        <div class="col-sm text-center">
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span id="ocp" class="input-group-text">OCP</span>
+                </div>
+                <input class="form-control write write" type="number" id="protectCurrent" min="0" max="10">
+                <div class="input-group-append">
+                    <span class="input-group-text">A</span>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm text-center">
+            <div class="input-group">
+                <div id="opp" class="input-group-prepend">
+                    <span class="input-group-text">OPP</span>
+                </div>
+                <input class="form-control write write" type="number" id="protectPower" min="0" max="320">
+                <div class="input-group-append">
+                    <span class="input-group-text">W</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    -->
+    <div class="row">
+        <div class="col-sm"></div>
+        <div class="col-sm"></div>
+        <div class="col-sm text-center">
+            <span id="ovp" class="badge badge-danger">OVP</span>
+            <span id="ocp" class="badge badge-danger">OCP</span>
+            <span id="opp" class="badge badge-danger">OPP</span>
+            <span id="otp" class="badge badge-danger">OTP</span>
+            <span id="scp" class="badge badge-danger">SCP</span>
+        </div>
+    </div>
+
+    <div class="row mt-5">
+        <div class="col-sm"><input id="m1" class="btn btn-sm btn-primary memory" type="button" value="M1"></div>
+        <div class="col-sm"><input id="m2" class="btn btn-sm btn-primary memory" type="button" value="M2"></div>
+        <div class="col-sm"><input id="m3" class="btn btn-sm btn-primary memory" type="button" value="M3"></div>
+        <div class="col-sm"><input id="m4" class="btn btn-sm btn-primary memory" type="button" value="M4"></div>
+        <div class="col-sm"><input id="m5" class="btn btn-sm btn-primary memory" type="button" value="M5"></div>
+        <div class="col-sm"><input id="m6" class="btn btn-sm btn-primary memory" type="button" value="M6"></div>
+    </div>
+
+    <div class="row ">
+        <div class="col-sm">
+            <div class="input-group">
+                <input id="m1Voltage" type="number" class="form-control write">
+                <div class="input-group-append">
+                    <div class="input-group-text">V</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm">
+            <div class="input-group">
+                <input id="m2Voltage" type="number" class="form-control write">
+                <div class="input-group-append">
+                    <div class="input-group-text">V</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm">
+            <div class="input-group">
+                <input id="m3Voltage" type="number" class="form-control write">
+                <div class="input-group-append">
+                    <div class="input-group-text">V</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm">
+            <div class="input-group">
+                <input id="m4Voltage" type="number" class="form-control write">
+                <div class="input-group-append">
+                    <div class="input-group-text">V</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm">
+            <div class="input-group">
+                <input id="m5Voltage" type="number" class="form-control write">
+                <div class="input-group-append">
+                    <div class="input-group-text">V</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm">
+            <div class="input-group">
+                <input id="m6Voltage" type="number" class="form-control write">
+                <div class="input-group-append">
+                    <div class="input-group-text">V</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-sm">
+            <div class="input-group">
+                <input id="m1Current" type="number" class="form-control write">
+                <div class="input-group-append">
+                    <div class="input-group-text">A</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm">
+            <div class="input-group">
+                <input id="m2Current" type="number" class="form-control write">
+                <div class="input-group-append">
+                    <div class="input-group-text">A</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm">
+            <div class="input-group">
+                <input id="m3Current" type="number" class="form-control write">
+                <div class="input-group-append">
+                    <div class="input-group-text">A</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm">
+            <div class="input-group">
+                <input id="m4Current" type="number" class="form-control write">
+                <div class="input-group-append">
+                    <div class="input-group-text">A</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm">
+            <div class="input-group">
+                <input id="m5Current" type="number" class="form-control write">
+                <div class="input-group-append">
+                    <div class="input-group-text">A</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm">
+            <div class="input-group">
+                <input id="m6Current" type="number" class="form-control write">
+                <div class="input-group-append">
+                    <div class="input-group-text">A</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-5">
+        <div class="col-12">
+            <div id="chart"></div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    require('./renderer.js');
+</script>
+
+</body>
