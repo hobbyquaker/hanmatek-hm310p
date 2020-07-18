@@ -3,26 +3,15 @@
 > Electron based application for the Hanmatek HM310P DC Power Supply, offers Charts and CSV Export.
 
 
-
 ![](screenshot.png)
 
 ## Usage
 
-### macOS
-
-Go to the latest release page and download the .dmg file.
-
-
-### Linux
-
-On the latest release page you can find a .deb file for Ubuntu and Debian and a .tar.gz that should work on other distributions.
-
-Don't forget to give you user access to the serial port, on Ubuntu this can be done by adding your user to the dialout group: `sudo usermod -a -G dialout <username>`
-
-
-### Settings
+[Downloads for macOS, Linux and Windows](https://github.com/hobbyquaker/hanmatek-hm310p/releases/latest)
 
 Lookup the serial port of the HM310P USB interface, on macOS e.g. `/dev/tty.wchusbserial14121130`. Open the application and paste the serial port in _Tools > Settings > Port_.
+
+Linux Users: Don't forget to give you user access to the serial port, on Ubuntu this can be done by adding your user to the dialout group: `sudo usermod -a -G dialout <username>`
 
 
 ## Contributing
