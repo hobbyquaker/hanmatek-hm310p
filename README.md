@@ -11,12 +11,25 @@
 
 Lookup the serial port of the HM310P USB interface, on macOS e.g. `/dev/tty.wchusbserial14121130`. Open the application and paste the serial port in _Tools > Settings > Port_.
 
-Linux Users: Don't forget to give you user access to the serial port, on Ubuntu this can be done by adding your user to the dialout group: `sudo usermod -a -G dialout <username>`
+Linux Users: Don't forget to give your user access to the serial port, on Ubuntu this can be done by adding your user to the dialout group: `sudo usermod -a -G dialout <username>`
 
 
 ## Contributing
 
-Clone the repo, do npm install in the project root. Use npm start to start the application in debug mode. Depending on your installed Nodejs version it might be necessary to rebuild the serialport module: ./node_modules/.bin/electron-rebuild serialport
+Pull requests welcome! Clone the repo, do `npm install` in the project root. Use `npm start` to start the application in debug mode. Build with `npm run dist`.
+
+
+## Todo/Ideas
+
+* HM305P Support
+* Remember window size and gaugeZoom
+* Useful os-dependent defaults for serial port settings
+* Autocomplete serial port
+* Send values to InfluxDB
+* REST API to control the device and poll values
+* MQTT Interface to control the device and publish values
+* Button to reset chart data
+* Chart fifo mode with adjustable time range
 
 
 ## Credits
