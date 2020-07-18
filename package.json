@@ -24,6 +24,7 @@
     "email": "hobbyquaker@gmail.com",
     "url": "https://github.com/hobbyquaker"
   },
+  "homepage": "https://github.com/hobbyquaker/hanmatek-hm310p",
   "license": "MIT",
   "dependencies": {
     "electron-is-dev": "^1.2.0",
